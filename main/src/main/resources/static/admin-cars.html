@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href="css/jquery-ui.css" rel="stylesheet" type="text/css">
+    <link href="css/jquery-ui.structure.css" rel="stylesheet" type="text/css">
+    <link href="css/jquery-ui.theme.css" rel="stylesheet" type="text/css">
+    <link href="css/fragments.css" rel="stylesheet" type="text/css">
+    <title>Список броней</title>
+    <style>
+        .container-fluid,
+        .row {
+            height: 100%;
+        }
+
+        html,
+        body {
+            height: 100%;
+            position: relative;
+        }
+
+        #app-root {
+            min-height: 100%;
+            display: block;
+            position: relative;
+            padding-bottom: 56px;
+        }
+
+        footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+<div class="wrapper" id="app-root">
+    <div th:replace="fragments :: navbar"></div>
+    <div class="container-fluid">
+        <div class="row">
+            <div th:replace="fragments :: nav-menu-user"></div>
+            <div>
+                <h2>Список всех автомобилей</h2>
+                <table class="table table-bordered" border="1" width="" cellpadding="5">
+                    <tr>
+                        <th scope="col" class="table-primary">Марка</th>
+                        <th scope="col" class="table-primary">Модель</th>
+                        <th scope="col" class="table-primary">Время начала</th>
+                        <th scope="col" class="table-primary">Время окончания</th>
+                        <th scope="col" class="table-primary">Цена</th>
+                        <th scope="col" class="table-primary">Пользователь</th>
+                        <th scope="col" class="table-primary">Статус оплаты</th>
+                    </tr>
+                    <tr th:each="book : ${list}">
+                        <td>
+                            <div th:text="@{${book.car.brand.name}}"></div>
+                        </td>
+                        <td>
+                            <div th:text="@{${book.car.model}}"></div>
+                        </td>
+                        <td>
+                            <div th:text="@{${book.dateFrom}}"></div>
+                        </td>
+                        <td>
+                            <div th:text="@{${book.dateTo}}"></div>
+                        </td>
+                        <td>
+                            <div th:text="@{${book.price}}"></div>
+                        </td>
+                        <td>
+                            <div th:text="@{${book.user.fullname}}"></div>
+                        </td>
+                        <td>
+                            <div th:switch="@{${book.status}}">
+                                <div th:case="PAID">оплачено</div>
+                                <div th:case="UNPAID">не оплачено<br>
+                                    <div th:case="*">неизвестно</div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <br>
+            </div>
+        </div>
+    </div>
+    <div th:replace="fragments :: footer"></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Просмотр пользователей</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href="nav-menu.css" rel="stylesheet" type="text/css">
+    <style>
+        .container-fluid,
+        .row {
+            height: 100%;
+        }
+
+        html,
+        body {
+            height: 100%;
+            position: relative;
+        }
+
+        #app-root {
+            min-height: 100%;
+            display: block;
+            position: relative;
+            padding-bottom: 56px;
+        }
+
+        footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+<div class="wrapper" id="app-root">
+    <div th:replace="fragments :: navbar"></div>
+    <div class="container-fluid">
+        <div class="row">
+            <div th:replace="fragments :: nav-menu-admin"></div>
+            <div id="content">
+                <h2>Список пользователей системы</h2>
+                <div class="w3-container">
+                    <table class="table  table-bordered">
+                        <thead>
+                        <tr>
+                            <th scope="col" class="table-primary">ФИО</th>
+                            <th scope="col" class="table-primary">login</th>
+                            <th scope="col" class="table-primary">Доступ в систему</th>
+                            <th scope="col" class="table-primary">Роль</th>
+                            <th scope="col" class="table-primary">Дата блокирования</th>
+                            <th scope="col" class="table-primary">Причина блокирвоания</th>
+                            <th scope="col" class="table-primary">Действие</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="user : ${users}">
+                            <td th:utext="${user.fullname}"></td>
+                            <td th:utext="${user.email}"></td>
+                            <td th:utext="${user.access}"></td>
+                            <td>
+                                <table>
+                                    <tr th:each="role : ${user.role}">
+                                        <div th:text="@{${role.name}}"></div>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td th:utext="${user.blockDate}"></td>
+                            <td th:utext="${user.blockInfo}"></td>
+                            <td>
+                                <a th:href="@{'/admin/user-edit/' + ${user.id}}">Редактировать</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="fragments :: footer"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+</body>
+</html>
+

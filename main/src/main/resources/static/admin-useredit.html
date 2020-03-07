@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Редактирование пользователя</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <style>
+        .container-fluid,
+        .row {
+            height: 100%;
+        }
+
+        html,
+        body {
+            height: 100%;
+            position: relative;
+        }
+
+        #app-root {
+            min-height: 100%;
+            display: block;
+            position: relative;
+            padding-bottom: 56px;
+        }
+
+        footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+<div th:replace="fragments :: navbar"></div>
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="fragments :: nav-menu-admin"></div>
+        <form method="post" th:object="${user}" class="col-md-6 mb-3" action="#" th:action="@{${action}}">
+            <h2>Личные данные</h2>
+            <div style="white-space: nowrap;" class="col-md-6 mb-3">
+                <label class="col-sm-2 col-form-label">Логин</label>
+                <input type="text" class="form-control" th:field="*{email}" value=""
+                       placeholder="Введите логин"
+                       autofocus>
+                <errors th:if="${#fields.hasErrors('email')}" th:errors="*{email}"/>
+                <text th:text="${emailError}"></text>
+            </div>
+            <div style="white-space: nowrap;" class="col-md-6 mb-3">
+                <label class="col-sm-2 col-form-label">Пароль</label>
+                <input type="text" class="form-control" th:field="*{password}" value=""
+                       placeholder="Введите пароль">
+            </div>
+            <div style="white-space: nowrap;" class="col-md-6 mb-3">
+                <label class="col-sm-2 col-form-label">ФИО</label>
+                <input type="text" class="form-control" placeholder="Введите ФИО" th:field="*{fullname}">
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="col-sm-2 col-form-label">Роль</label>
+                <select class="custom-select d-block w-100" id="role" required="" th:field="*{role}">
+                    <option th:each="roleItem : ${roles}"
+                            th:value="${roleItem.id}"
+                            th:text="${roleItem.name}"></option>
+                </select>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="col-md-6 col-form-label" for="access">Доступ в систему</label>
+                <select class="custom-select d-block w-100" id="access" required="" th:field="*{access}">
+                    <option th:each="accessOpt : ${T(app.persistance.enums.UserAccess).values()}"
+                            th:value="${accessOpt}" th:text="${accessOpt.displayValue}"></option>
+                </select>
+            </div>
+            <div style="white-space: nowrap;" class="col-md-6 mb-3">
+                <label class="col-sm-2 col-form-label">Причина блокировки</label>
+                <input type="text" class="form-control" placeholder="комментарий блокировки"
+                       th:field="*{blockInfo}">
+            </div>
+            <div class="col-sm-6">
+                <table>
+                    <div>
+                        <button class="btn btn-lg btn-primary btn-block" id="button" type="submit">Сохранить</button>
+                    </div>
+                </table>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div th:replace="fragments :: footer"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+</body>
+</html>

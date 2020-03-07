@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+>
+<head>
+    <title>Просмотр автомобиля</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href="css/jquery-ui.css" rel="stylesheet" type="text/css">
+    <link href="css/jquery-ui.structure.css" rel="stylesheet" type="text/css">
+    <link href="css/jquery-ui.theme.css" rel="stylesheet" type="text/css">
+    <link href="css/fragments.css" rel="stylesheet" type="text/css">
+    <style>
+        html,
+        body {
+            height: 100%;
+            position: relative;
+        }
+        #app-root {
+            min-height: 100%;
+            display: block;
+            position: relative;
+            padding-bottom: 56px;
+        }
+        footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+    <style>
+        .block-left{width:50%;height:800px;overflow:auto;float:left;}
+        .block-right{width:50%;height:800px;overflow:auto;}
+        .block-info{margin:20px}
+    </style>
+</head>
+<body>
+<div class="wrapper" id="app-root">
+    <div th:replace="fragments :: navbar"></div>
+    <h2>Просмотр автомобиля:</h2>
+    <div class="block-left">
+        <div class="block-info">
+            <div th:if="${(car.image == null)}">
+                <img th:src="@{'/no_photo.png'}" width="500" alt=""/>
+            </div>
+            <div th:if="${(car.image != null)}">
+                <img th:src="@{${imgURL} + ${car.image}}" width="900" alt=""/>
+            </div>
+        </div>
+    </div>
+    <div class="block-right">
+        <div class="block-info">
+            <div><span id="status" th:utext="${status}"></span></div>
+            <br/>
+            <div>Рег. номер: <span th:utext="${car.regnumber}"></span></div>
+            <br/>
+            <div>Марка и модель автомобиля: <span th:utext="${brand.name} + ' ' + ${modelCar.name}"></span></div>
+            <br/>
+            <div>Город: <span th:utext="${city.name}"></span></div>
+            <br/>
+            <div>Категория: <span th:utext="${type.name}"></span></div>
+            <br/>
+            <div>Состояние: <span th:utext="${car.state}"></span></div>
+            <br/>
+            <div>Стоимость аренды за день: <span th:utext="${car.price}"></span> руб.</div>
+            <br/>
+            <form action="#" th:action="@{${action}}" method="post">
+                <p>Дата брони:
+                <p>С: <input type="date" name="dateFrom" id="dateFrom" th:value="${minDate}" th:min="${minDate}">
+                    до: <input type="date" name="dateTo" id="dateTo" th:value="${minDateTo}" th:min="${minDateTo}">
+                <div class="col-sm-6">
+                    <input class="btn btn-primary" type="submit" value="Забронировать"/>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div th:replace="fragments :: footer"></div>
+</div>
+</body>
+</html>

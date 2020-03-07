@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <title>Список автомобилей</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href="css/jquery-ui.css" rel="stylesheet" type="text/css">
+    <link href="css/jquery-ui.structure.css" rel="stylesheet" type="text/css">
+    <link href="css/jquery-ui.theme.css" rel="stylesheet" type="text/css">
+    <link href="css/fragments.css" rel="stylesheet" type="text/css">
+    <title>Список авто</title>
+    <style>
+        .container-fluid,
+        .row {
+            height: 100%;
+        }
+
+        html,
+        body {
+            height: 100%;
+            position: relative;
+        }
+
+        #app-root {
+            min-height: 100%;
+            display: block;
+            position: relative;
+            padding-bottom: 56px;
+        }
+
+        footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+<div class="wrapper" id="app-root">
+    <div th:replace="fragments :: navbar"></div>
+    <div class="container-fluid">
+        <div class="row">
+            <div th:replace="fragments :: nav-menu-admin"></div>
+            <div>
+                <h2>Список всех автомобилей</h2>
+                <div class="col-sm-6">
+                    <input class="btn btn-primary" type="submit" value="Добавить"
+                           onclick="location.href='/createcar/'"/>
+                </div>
+                <br />
+                <table class="table  table-bordered">
+                    <thead>
+                    <tr>
+                        <th scope="col" class="table-primary">Рег. номер</th>
+                        <th scope="col" class="table-primary">Цена</th>
+                        <th scope="col" class="table-primary">Брэнд</th>
+                        <th scope="col" class="table-primary">Город</th>
+                        <th scope="col" class="table-primary">Тип</th>
+                        <th scope="col" class="table-primary">Действие</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="car : ${list}">
+                        <td th:utext="${car.regnumber}"></td>
+                        <td th:utext="${car.price}"></td>
+                        <td th:utext="${car.getBrand().getName()}"></td>
+                        <td th:utext="${car.getCity().getName()}"></td>
+                        <td th:utext="${car.getType().getName()}"></td>
+                        <td>
+                            <a th:href="@{'/editcar/' + ${car.getId()}}">Редактировать</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div th:replace="fragments :: footer"></div>
+</div>
+</body>
+</html>

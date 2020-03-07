@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="create-brands_01">
+
+        <createTable tableName="brands">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="name" type="varchar(200)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <insert tableName="brands">
+            <column name="id" value="0"/>
+            <column name="name" value="Не определен"/>
+        </insert>
+
+        <sql>
+            ALTER TABLE cars DROP COLUMN mark;
+            ALTER TABLE cars ADD COLUMN brand_id integer NOT NULL DEFAULT 0;
+        </sql>
+
+        <addForeignKeyConstraint
+                baseColumnNames="brand_id"
+                baseTableName="cars"
+                constraintName="FK_car_brand"
+                deferrable="false"
+                initiallyDeferred="false"
+                referencedColumnNames="id"
+                referencedTableName="brands"/>
+
+    </changeSet>
+
+</databaseChangeLog>

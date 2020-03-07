@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Личный кабинет Администратора</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href="css/jquery-ui.css" rel="stylesheet" type="text/css">
+    <link href="css/jquery-ui.structure.css" rel="stylesheet" type="text/css">
+    <link href="css/jquery-ui.theme.css" rel="stylesheet" type="text/css">
+    <link href="css/nav-menu.css" rel="stylesheet" type="text/css">
+    <link href="css/fragments.css" rel="stylesheet" type="text/css">
+    <style>
+        html,
+        body {
+            height: 100%;
+            position: relative;
+        }
+
+        #app-root {
+            min-height: 100%;
+            display: block;
+            position: relative;
+            padding-bottom: 56px;
+        }
+
+        footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+        .semi-transparent-button {
+            display: block;
+            box-sizing: border-box;
+            margin: 0 auto;
+            padding: 8px;
+            width: 80%;
+            max-width: 800px;
+            background: #fff; /* запасной цвет для старых браузеров */
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 8px;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            letter-spacing: 1px;
+            transition: all 0.3s ease-out;
+        }
+    </style>
+</head>
+<body>
+
+<div class="wrapper" id="app-root"
+     style="background-image: url(home.jpg); background-repeat: no-repeat; background-position: center center; background-size: 100%;">
+    <div th:replace="fragments :: navbar"></div>
+    <div class="container-fluid">
+        <div style="text-align: center;">
+            <input class="btn btn-primary btn-lg semi-transparent-button" style="font-size: 5rem;" value="Пользователи"
+                   type="button" onclick="location.href='/admin/users'"/>
+        </div>
+        <div style="text-align: center;">
+            <input class="btn btn-primary btn-lg semi-transparent-button" style="font-size: 5rem;" value="Категории"
+                   type="button" onclick="location.href='/admin/categories'"/>
+        </div>
+        <div style="text-align: center;">
+            <input class="btn btn-primary btn-lg semi-transparent-button" style="font-size: 3rem;" value="Автомобили"
+                   type="button" onclick="location.href='/admin/cars'"/>
+        </div>
+        <div style="text-align: center;">
+            <input class="btn btn-primary btn-lg semi-transparent-button" style="font-size: 3rem;" value="Бренды" type="button"
+                   onclick="location.href='/admin/brand-list/'"/>
+        </div>
+        <div style="text-align: center;">
+            <input class="btn btn-primary btn-lg semi-transparent-button" style="font-size: 3rem;" value="Брони" type="button"
+                   onclick="location.href='/admin/booking'"/>
+        </div>
+    </div>
+    <div th:replace="fragments :: footer"></div>
+</div>
+</body>
+</html>

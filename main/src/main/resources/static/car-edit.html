@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Редактирование информации автомобиля</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href="css/jquery-ui.css" rel="stylesheet" type="text/css">
+    <link href="css/jquery-ui.structure.css" rel="stylesheet" type="text/css">
+    <link href="css/jquery-ui.theme.css" rel="stylesheet" type="text/css">
+    <link href="css/fragments.css" rel="stylesheet" type="text/css">
+    <style>
+        .container-fluid,
+        .row {
+            height: 100%;
+        }
+
+        html,
+        body {
+            height: 100%;
+            position: relative;
+        }
+
+        #app-root {
+            min-height: 100%;
+            display: block;
+            position: relative;
+            padding-bottom: 56px;
+        }
+
+        footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+<div th:replace="fragments :: navbar"></div>
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="fragments :: nav-menu-admin"></div>
+        <div class="w3-container">
+            <h2>Редактировать автомобиль</h2>
+            <br/>
+            <form action="#" th:action="@{${action}}" th:object="${car}" method="post" enctype="multipart/form-data">
+                <div class="col-md-5 mb-3">
+                    <label for="mark">Марка</label>
+                    <select class="custom-select d-block w-100" id="mark" required="" th:field="*{brand}">
+                        <option th:each="brandItem : ${marks}"
+                                th:value="${brandItem.id}"
+                                th:text="${brandItem.name}"></option>
+                    </select>
+                </div>
+                <div class="col-md-5 mb-3">
+                    <label for="model">Модель</label>
+                    <select class="custom-select d-block w-100" id="model" required="" th:field="*{model}">
+                        <option th:each="modelItem : ${models}"
+                                th:value="${modelItem.id}"
+                                th:text="${modelItem.name}"></option>
+                    </select>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="price">Цена</label>
+                    <input type="text" class="form-control" id="price" placeholder="" required="" th:field="*{price}">
+                    <div class="invalid-feedback">
+                        Укажите цену
+                    </div>
+                </div>
+                <div class="col-md-5 mb-3">
+                    <label for="category">Категория</label>
+                    <select class="custom-select d-block w-100" id="category" required="" th:field="*{type}">
+                        <option th:each="category : ${categories}"
+                                th:value="${category.id}"
+                                th:text="${category.name}"></option>
+                    </select>
+                </div>
+                <div class="col-md-5 mb-3">
+                    <label for="state">Состояние</label>
+                    <select name="state" class="custom-select d-block w-100" id="state">
+                        <option th:each="stateOpt : ${T(app.persistance.entity.State).values()}"
+                                th:value="${stateOpt}" th:text="${stateOpt.displayValue}">
+                        </option>
+                    </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="regnumber">Регистрационный номер</label>
+                    <input type="text" class="form-control" id="regnumber" placeholder="Введите регистрационный номер"
+                           required="" th:field="*{regnumber}">
+                    <div class="invalid-feedback">
+                        Укажите регистрационный номер авто
+                    </div>
+                </div>
+                <div class="col-md-5 mb-3">
+                    <label for="city">Месторасположение</label>
+                    <select class="custom-select d-block w-100" id="city" required="" th:field="*{city}">
+                        <option th:each="cityOpt : ${cities}"
+                                th:value="${cityOpt.id}"
+                                th:text="${cityOpt.name}"></option>
+                    </select>
+                </div>
+                <div class="form-group mx-sm-3 mb-2">
+                    Изображение:
+                    <input type="file" name="imageFile" id="imageFile"/>
+                    <br/>
+                    <input type="hidden" th:field="*{image}"/>
+                </div>
+                <div class="form-group mx-sm-3 mb-2">
+                    <input type="hidden" th:field="*{id}"/>
+                </div>
+                <div>
+                    <button class="btn btn-lg btn-primary btn-block" id="button" type="submit">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

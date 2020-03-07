@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="create-db">
+
+        <createTable tableName="roles">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <insert tableName="roles">
+            <column name="name" value="Admin"/>
+        </insert>
+
+        <insert tableName="roles">
+            <column name="name" value="User"/>
+        </insert>
+
+        <createTable tableName="cities">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <insert tableName="cities">
+            <column name="name" value="Москва"/>
+        </insert>
+        <insert tableName="cities">
+            <column name="name" value="Санкт-Петербург"/>
+        </insert>
+        <insert tableName="cities">
+            <column name="name" value="Новосибирск"/>
+        </insert>
+        <insert tableName="cities">
+            <column name="name" value="Екатеринбург"/>
+        </insert>
+        <insert tableName="cities">
+            <column name="name" value="Казань"/>
+        </insert>
+
+        <createTable tableName="users">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="login" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fullname" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="role_id" type="BIGINT" >
+                <constraints nullable="false"/>
+            </column>
+            <column name="access" type="varchar(255)" >
+                <constraints nullable="true"/>
+            </column>
+            <column name="block_date" type="TIMESTAMP WITHOUT TIME ZONE" >
+                <constraints nullable="true"/>
+            </column>
+            <column name="block_info" type="varchar(255)" >
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseColumnNames="role_id"
+                baseTableName="users"
+                constraintName="FK_user_role"
+                deferrable="false"
+                initiallyDeferred="false"
+                referencedColumnNames="id"
+                referencedTableName="roles"/>
+
+        <insert tableName="users">
+            <column name="login" value="admin@local"/>
+            <column name="password" value="$2a$10$x2pHwXhF6ocLu3tD01qWc.pF10Nlxenu.JLq6QyE/F5Xy/VUA2tRS"/>
+            <column name="fullname" value="user2"/>
+            <column name="role_id" value="1"/>
+            <column name="access" value="Есть"/>
+        </insert>
+        <insert tableName="users">
+            <column name="login" value="qwe@local"/>
+            <column name="password" value="$2a$10$yqrL5sBX5CeiP7d/2daKj.7VZEYsjv0dUSK4iURqXc0UAruJcB/pi"/>
+            <column name="fullname" value="user1"/>
+            <column name="role_id" value="2"/>
+            <column name="access" value="Есть"/>
+        </insert>
+
+        <createTable tableName="brands">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <insert tableName="brands">
+            <column name="name" value="Hyundai"/>
+        </insert>
+        <insert tableName="brands">
+            <column name="name" value="Kia"/>
+        </insert>
+        <insert tableName="brands">
+            <column name="name" value="Toyota"/>
+        </insert>
+        <insert tableName="brands">
+            <column name="name" value="Volkswagen"/>
+        </insert>
+        <insert tableName="brands">
+            <column name="name" value="Lada"/>
+        </insert>
+        <insert tableName="brands">
+            <column name="name" value="ГАЗ"/>
+        </insert>
+
+        <createTable tableName="types">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <insert tableName="types">
+            <column name="name" value="Легковой"/>
+        </insert>
+        <insert tableName="types">
+            <column name="name" value="Грузовой"/>
+        </insert>
+
+        <createTable tableName="models">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <insert tableName="models">
+            <column name="name" value="Solaris"/>
+        </insert>
+        <insert tableName="models">
+            <column name="name" value="Rio"/>
+        </insert>
+        <insert tableName="models">
+            <column name="name" value="Camry"/>
+        </insert>
+        <insert tableName="models">
+            <column name="name" value="Polo"/>
+        </insert>
+        <insert tableName="models">
+            <column name="name" value="Vesta"/>
+        </insert>
+        <insert tableName="models">
+            <column name="name" value="Газель"/>
+        </insert>
+
+        <createTable tableName="cars">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="type_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="brand_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="model_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="city_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="regnumber" type="VARCHAR(255)"/>
+            <column name="state" type="INTEGER"/>
+            <column name="price" type="FLOAT4">
+                <constraints nullable="false"/>
+            </column>
+            <column name="image" type="VARCHAR(255)"/>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseColumnNames="city_id"
+                baseTableName="cars"
+                constraintName="FK_car_city"
+                deferrable="false"
+                initiallyDeferred="false"
+                referencedColumnNames="id"
+                referencedTableName="cities"/>
+
+        <addForeignKeyConstraint
+                baseColumnNames="brand_id"
+                baseTableName="cars"
+                constraintName="FK_car_brand"
+                deferrable="false"
+                initiallyDeferred="false"
+                referencedColumnNames="id"
+                referencedTableName="brands"/>
+
+        <addForeignKeyConstraint
+                baseColumnNames="type_id"
+                baseTableName="cars"
+                constraintName="FK_car_type"
+                deferrable="false"
+                initiallyDeferred="false"
+                referencedColumnNames="id"
+                referencedTableName="types"/>
+
+        <addForeignKeyConstraint
+                baseColumnNames="model_id"
+                baseTableName="cars"
+                constraintName="FK_car_model"
+                deferrable="false"
+                initiallyDeferred="false"
+                referencedColumnNames="id"
+                referencedTableName="models"/>
+
+        <insert tableName="cars">
+            <column name="type_id" value="1"/>
+            <column name="brand_id" value="1"/>
+            <column name="model_id" value="1"/>
+            <column name="city_id" value="1"/>
+            <column name="regnumber" value="В323ОМ"/>
+            <column name="state" value="1"/>
+            <column name="price" value="1000"/>
+            <column name="image" value="93dffcb6-b782-4c4f-b06d-8c434851272b.png"/>
+        </insert>
+        <insert tableName="cars">
+            <column name="type_id" value="1"/>
+            <column name="brand_id" value="1"/>
+            <column name="model_id" value="1"/>
+            <column name="city_id" value="4"/>
+            <column name="regnumber" value="А123АА"/>
+            <column name="state" value="0"/>
+            <column name="price" value="1200"/>
+            <column name="image" value="ba973c29-561c-4726-8929-a4877638cd94.png"/>
+        </insert>
+        <insert tableName="cars">
+            <column name="type_id" value="1"/>
+            <column name="brand_id" value="2"/>
+            <column name="model_id" value="2"/>
+            <column name="city_id" value="3"/>
+            <column name="regnumber" value="Х797ВТ"/>
+            <column name="state" value="1"/>
+            <column name="price" value="1000"/>
+            <column name="image" value="8b548490-16b4-4d68-9827-de23db524c7b.png"/>
+        </insert>
+        <insert tableName="cars">
+            <column name="type_id" value="1"/>
+            <column name="brand_id" value="3"/>
+            <column name="model_id" value="3"/>
+            <column name="city_id" value="2"/>
+            <column name="regnumber" value="У878ТХ"/>
+            <column name="state" value="1"/>
+            <column name="price" value="800"/>
+            <column name="image" value="be514351-e339-4eb9-9f93-ec194e6c3856.png"/>
+        </insert>
+        <insert tableName="cars">
+            <column name="type_id" value="1"/>
+            <column name="brand_id" value="4"/>
+            <column name="model_id" value="4"/>
+            <column name="city_id" value="5"/>
+            <column name="regnumber" value="Е453РТ"/>
+            <column name="state" value="0"/>
+            <column name="price" value="1100"/>
+            <column name="image" value="f5a4d8a6-6b36-4800-a7da-f6c69850f26a.png"/>
+        </insert>
+        <insert tableName="cars">
+            <column name="type_id" value="1"/>
+            <column name="brand_id" value="5"/>
+            <column name="model_id" value="5"/>
+            <column name="city_id" value="4"/>
+            <column name="regnumber" value="К455ОМ"/>
+            <column name="state" value="1"/>
+            <column name="price" value="900"/>
+            <column name="image" value="ed91ad2a-53cd-482c-bd88-e11aa1604b5e.png"/>
+        </insert>
+        <insert tableName="cars">
+            <column name="type_id" value="2"/>
+            <column name="brand_id" value="6"/>
+            <column name="model_id" value="6"/>
+            <column name="city_id" value="3"/>
+            <column name="regnumber" value="У664МН"/>
+            <column name="state" value="1"/>
+            <column name="price" value="2000"/>
+            <column name="image" value="c5c374f1-ef6e-4025-a5fa-3aa267a75d44.png"/>
+        </insert>
+
+        <createTable tableName="booking">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="car_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_from" type="TIMESTAMP WITHOUT TIME ZONE" >
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_to" type="TIMESTAMP WITHOUT TIME ZONE" >
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="FLOAT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="VARCHAR(255)"/>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseColumnNames="user_id"
+                baseTableName="booking"
+                constraintName="FK_booking_user"
+                deferrable="false"
+                initiallyDeferred="false"
+                referencedColumnNames="id"
+                referencedTableName="users"/>
+
+        <addForeignKeyConstraint
+                baseColumnNames="car_id"
+                baseTableName="booking"
+                constraintName="FK_booking_car"
+                deferrable="false"
+                initiallyDeferred="false"
+                referencedColumnNames="id"
+                referencedTableName="cars"/>
+
+    </changeSet>
+
+</databaseChangeLog>
